@@ -74,17 +74,21 @@ export default function HomePage() {
             </nav>
 
             {/* Right Section */}
-            <div className="flex items-center space-x-2 sm:space-x-3">
+            <div className="ml-auto flex items-center gap-2 sm:gap-3 overflow-x-auto whitespace-nowrap pr-1">
               {/* Theme & Language */}
-              <ThemeSwitcher />
-              <LanguageSelect compact />
+              <div className="shrink-0 ml-2 sm:ml-3">
+                <ThemeSwitcher />
+              </div>
+              <div className="sm:hidden min-w-[96px] shrink-0 mx-1">
+                <LanguageSelect compact />
+              </div>
 
               {/* Auth Buttons */}
-              <div className="flex items-center space-x-2">
-                <Button variant="outline" size="sm" asChild className="text-xs sm:text-sm px-2 sm:px-3 py-1.5">
+              <div className="flex items-center gap-1 sm:gap-2 shrink-0">
+                <Button variant="outline" size="sm" asChild className="text-[11px] sm:text-xs px-2 py-1.5 shrink-0">
                   <a href="/auth">{t('auth.signIn')}</a>
                 </Button>
-                <Button size="sm" className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white text-xs sm:text-sm px-2 sm:px-3 py-1.5" asChild>
+                <Button size="sm" className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white text-[11px] sm:text-xs px-2 py-1.5 shrink-0" asChild>
                   <a href="/auth">{t('auth.signUp')}</a>
                 </Button>
               </div>
@@ -118,7 +122,7 @@ export default function HomePage() {
                 </div>
                 <Button 
                   size="lg" 
-                  className="bg-accent hover:bg-accent/90 text-accent-foreground px-4 sm:px-8 h-10 sm:h-12 text-sm sm:text-base"
+                  className="bg-accent hover:bg-accent/90 text-accent-foreground px-4 sm:px-8 h-10 sm:h-12 text-sm sm:text-base w-full sm:w-auto"
                   onClick={handleSearch}
                 >
                   {t('hero.searchButton')}
@@ -127,7 +131,7 @@ export default function HomePage() {
             </div>
 
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
-              <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground text-sm sm:text-base" asChild>
+              <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground text-sm sm:text-base w-full sm:w-auto" asChild>
                 <a href="/dashboard/loss">
                   <Plus className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
                   {t('hero.cta.reportLost')}
@@ -136,7 +140,7 @@ export default function HomePage() {
               <Button
                 size="lg"
                 variant="outline"
-                className="border-accent text-accent hover:bg-accent hover:text-accent-foreground bg-transparent text-sm sm:text-base"
+                className="border-accent text-accent hover:bg-accent hover:text-accent-foreground bg-transparent text-sm sm:text-base w-full sm:w-auto"
                 asChild
               >
                 <a href="/search">
@@ -360,7 +364,7 @@ export default function HomePage() {
               {t('cta.subtitle')}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" className="bg-purple-600 hover:bg-purple-700 text-white dark:bg-purple-600 dark:hover:bg-purple-700 dark:text-white" asChild>
+              <Button size="lg" className="bg-purple-600 hover:bg-purple-700 text-white dark:bg-purple-600 dark:hover:bg-purple-700 dark:text-white w-full sm:w-auto" asChild>
                 <a href="/search">
                   <Plus className="mr-2 h-5 w-5" />
                   {t('cta.reportLost')}
@@ -369,7 +373,7 @@ export default function HomePage() {
               <Button
                 size="lg"
                 variant="outline"
-                className="border-2 border-black dark:border-white text-black dark:text-white hover:bg-black dark:hover:bg-white hover:text-white dark:hover:text-black bg-transparent transition-all duration-200 font-medium"
+                className="border-2 border-black dark:border-white text-black dark:text-white hover:bg-black dark:hover:bg-white hover:text-white dark:hover:text-black bg-transparent transition-all duration-200 font-medium w-full sm:w-auto"
                 asChild
               >
                 <a href="/search">

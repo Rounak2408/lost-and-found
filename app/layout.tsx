@@ -32,7 +32,7 @@ export default function RootLayout({
           disableTransitionOnChange={false}
         >
           <I18nProvider>
-            <div className="fixed top-3 right-3 z-50">
+            <div className="fixed top-3 right-3 z-50 hidden sm:block">
               <LanguageSelect compact />
             </div>
             <ErrorBoundary>

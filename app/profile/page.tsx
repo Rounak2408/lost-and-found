@@ -179,24 +179,24 @@ export default function UserProfile() {
   }
 
   return (
-    <div className="min-h-screen bg-background p-4">
+    <div className="min-h-screen bg-background p-3 sm:p-4">
       <div className="max-w-2xl mx-auto">
         {/* Header with back button */}
-        <div className="mb-6">
+        <div className="mb-4 sm:mb-6">
           <Button 
             variant="ghost" 
             onClick={() => router.push('/dashboard')}
-            className="flex items-center gap-2 mb-4"
+            className="flex items-center gap-2 mb-2 sm:mb-4 px-2 sm:px-3"
           >
             <ArrowLeft className="h-4 w-4" />
             Back to Dashboard
           </Button>
         </div>
         
-        <Card>
+        <Card className="border-border">
           <CardHeader>
-            <div className="flex items-center justify-between">
-              <div className="flex items-center space-x-4">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+              <div className="flex items-center gap-3 sm:gap-4">
                 <Avatar 
                   key={user.avatar_url || 'no-avatar'} // Force re-render when avatar changes
                   user={user ? {
@@ -213,14 +213,14 @@ export default function UserProfile() {
                   showEditButton={true}
                   onAvatarUpdate={handleAvatarUpdate}
                 />
-                <div>
-                  <CardTitle>User Profile</CardTitle>
-                  <p className="text-sm text-muted-foreground">
+                <div className="min-w-0">
+                  <CardTitle className="truncate">User Profile</CardTitle>
+                  <p className="text-sm text-muted-foreground leading-snug">
                     Your account information from the users database table
                   </p>
                 </div>
               </div>
-              <div className="flex gap-2">
+              <div className="flex gap-2 self-start sm:self-auto">
                 {isEditing ? (
                   <>
                     <Button 
@@ -270,7 +270,7 @@ export default function UserProfile() {
             </div>
           </CardHeader>
           
-          <CardContent className="space-y-4">
+          <CardContent className="space-y-4 sm:space-y-5">
             {error && (
               <Alert variant="destructive">
                 <AlertCircle className="h-4 w-4" />
@@ -279,14 +279,14 @@ export default function UserProfile() {
             )}
 
             {user ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
                 <div>
                   <label className="text-sm font-medium text-muted-foreground">
                     User ID
                   </label>
-                  <p className="text-sm font-mono bg-muted p-2 rounded">
+                  <div className="text-sm font-mono bg-muted p-2 rounded overflow-x-auto whitespace-nowrap">
                     {user.id}
-                  </p>
+                  </div>
                 </div>
                 
                 <div>
@@ -316,7 +316,7 @@ export default function UserProfile() {
                       className="mt-1"
                     />
                   ) : (
-                    <p className="text-sm font-medium">{user.first_name}</p>
+                    <p className="text-sm font-medium truncate">{user.first_name}</p>
                   )}
                 </div>
                 
@@ -332,7 +332,7 @@ export default function UserProfile() {
                       className="mt-1"
                     />
                   ) : (
-                    <p className="text-sm font-medium">{user.last_name}</p>
+                    <p className="text-sm font-medium truncate">{user.last_name}</p>
                   )}
                 </div>
                 
@@ -349,7 +349,7 @@ export default function UserProfile() {
                       className="mt-1"
                     />
                   ) : (
-                    <p className="text-sm">{user.email}</p>
+                    <p className="text-sm break-words">{user.email}</p>
                   )}
                 </div>
                 
@@ -366,7 +366,7 @@ export default function UserProfile() {
                       className="mt-1"
                     />
                   ) : (
-                    <p className="text-sm font-medium text-primary">
+                    <p className="text-sm font-medium text-primary break-words">
                       {user.phone}
                     </p>
                   )}
