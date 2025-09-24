@@ -38,10 +38,9 @@ import {
   getUserMeetupRequests,
   completeMeetup,
   reportSafetyConcern,
-  getSafeMeetupSuggestions,
-  canSendMessages
+  getSafeMeetupSuggestions
 } from '@/lib/database/secure-messaging'
-import { getUserVerificationStatus, getVerificationBadge } from '@/lib/database/verification'
+import { getUserVerificationStatus, getVerificationBadge, canSendMessages } from '@/lib/database/verification'
 
 interface SecureMessagingProps {
   userId: number
