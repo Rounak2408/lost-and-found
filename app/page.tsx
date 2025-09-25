@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input"
 import { ThemeSwitcher } from "@/components/theme-switcher"
 import RecentlyReturned from "@/components/recently-returned"
 import { LanguageSelect } from "@/components/language-select"
+import { MobileControls } from "@/components/mobile-controls"
 import { useI18n } from "@/components/i18n-provider"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
@@ -43,16 +44,16 @@ export default function HomePage() {
     <div className="min-h-screen bg-background">
       {/* Header */}
       <header className="border-b bg-white/95 dark:bg-gray-900/95 backdrop-blur-md sticky top-0 z-50 shadow-sm">
-        <div className="container mx-auto px-3 sm:px-6 py-3 sm:py-4">
+        <div className="container mx-auto px-2 sm:px-6 py-2 sm:py-4">
           <div className="flex items-center justify-between relative">
             {/* Logo Section */}
-            <div className="flex items-center space-x-3">
-              <div className="flex items-center space-x-2">
-                <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-purple-600 to-blue-600 rounded-lg flex items-center justify-center">
-                  <Search className="h-4 w-4 sm:h-5 sm:w-5 text-white" />
+            <div className="flex items-center space-x-2 sm:space-x-3">
+              <div className="flex items-center space-x-1 sm:space-x-2">
+                <div className="w-7 h-7 sm:w-10 sm:h-10 bg-gradient-to-br from-purple-600 to-blue-600 rounded-lg flex items-center justify-center">
+                  <Search className="h-3 w-3 sm:h-5 sm:w-5 text-white" />
                 </div>
                 <div>
-                  <h1 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white">SmartFind</h1>
+                  <h1 className="text-base sm:text-xl font-bold text-gray-900 dark:text-white">SmartFind</h1>
                   <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 hidden sm:block">Lost & Found Management</p>
                 </div>
               </div>
@@ -75,21 +76,20 @@ export default function HomePage() {
             </nav>
 
             {/* Right Section */}
-            <div className="ml-auto flex items-center gap-2 sm:gap-3 overflow-x-auto whitespace-nowrap pr-1">
-              {/* Theme & Language */}
-              <div className="shrink-0 ml-2 sm:ml-3">
-                <ThemeSwitcher />
-              </div>
-              <div className="min-w-[120px] shrink-0 mx-1">
-                <LanguageSelect compact />
+            <div className="ml-auto flex items-center gap-1 sm:gap-3 overflow-x-auto whitespace-nowrap pr-1">
+              {/* Desktop Theme & Language */}
+              <div className="hidden sm:flex items-center gap-2">
+                <div className="shrink-0">
+                  <ThemeSwitcher />
+                </div>
+                <div className="min-w-[120px] shrink-0">
+                  <LanguageSelect compact />
+                </div>
               </div>
 
               {/* Auth Buttons */}
               <div className="flex items-center gap-1 sm:gap-2 shrink-0">
-                <Button variant="outline" size="sm" asChild className="text-[11px] sm:text-xs px-2 py-1.5 shrink-0">
-                  <a href="/auth">{t('auth.signIn')}</a>
-                </Button>
-                <Button size="sm" className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white text-[11px] sm:text-xs px-2 py-1.5 shrink-0" asChild>
+                <Button size="sm" className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white text-[10px] sm:text-xs px-1.5 sm:px-2 py-1 sm:py-1.5 shrink-0" asChild>
                   <a href="/auth">{t('auth.signUp')}</a>
                 </Button>
               </div>
@@ -286,8 +286,8 @@ export default function HomePage() {
       <section className="py-12 sm:py-16 bg-card/30">
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between mb-6">
-            <h2 className="text-2xl sm:text-3xl font-bold">Recently Returned</h2>
-            <Badge variant="success">Recovered</Badge>
+            <h2 className="text-2xl sm:text-3xl font-bold">{t('recentlyReturned.title')}</h2>
+            <Badge variant="success">{t('recentlyReturned.recovered')}</Badge>
           </div>
           <RecentlyReturned />
         </div>
@@ -495,6 +495,9 @@ export default function HomePage() {
           </div>
         </div>
       </footer>
+
+      {/* Mobile Controls */}
+      <MobileControls />
     </div>
   )
 }

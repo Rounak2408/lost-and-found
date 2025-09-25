@@ -9,6 +9,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Label } from '@/components/ui/label'
 import { ThemeSwitcher } from '@/components/theme-switcher'
+import { MobileControls } from '@/components/mobile-controls'
 import { supabase } from '@/lib/supabase/client'
 
 type Category = 'all' | 'electronics' | 'documents' | 'id-card' | 'bags' | 'keys' | 'others'
@@ -158,7 +159,9 @@ export default function SearchPage() {
             <SearchIcon className="h-6 w-6 text-accent" />
             <span className="font-semibold">SmartFind</span>
           </div>
-          <ThemeSwitcher />
+          <div className="hidden sm:block">
+            <ThemeSwitcher />
+          </div>
         </div>
       </header>
 
@@ -276,6 +279,9 @@ export default function SearchPage() {
           </section>
         </div>
       </main>
+
+      {/* Mobile Controls */}
+      <MobileControls />
     </div>
   )
 }

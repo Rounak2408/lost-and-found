@@ -7,7 +7,6 @@ import { Suspense } from "react"
 import { ThemeProvider } from "@/components/theme-provider"
 import { I18nProvider } from "@/components/i18n-provider"
 import { ErrorBoundary } from "@/components/error-boundary"
-import { LanguageSelect } from "@/components/language-select"
 import "./globals.css"
 
 export const metadata: Metadata = {
@@ -32,9 +31,6 @@ export default function RootLayout({
           disableTransitionOnChange={false}
         >
           <I18nProvider>
-            <div className="fixed top-3 right-3 z-50 hidden sm:block">
-              <LanguageSelect compact />
-            </div>
             <ErrorBoundary>
               <Suspense fallback={null}>{children}</Suspense>
             </ErrorBoundary>

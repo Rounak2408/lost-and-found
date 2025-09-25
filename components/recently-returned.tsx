@@ -5,8 +5,10 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/componen
 import { Badge } from '@/components/ui/badge'
 import { getRecentlyReturnedFinds, type Find } from '@/lib/database/finds-losses'
 import { Calendar, MapPin, ShieldCheck } from 'lucide-react'
+import { useI18n } from '@/components/i18n-provider'
 
 export default function RecentlyReturned() {
+  const { t } = useI18n()
   const [items, setItems] = useState<Find[]>([] as any)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
@@ -22,7 +24,7 @@ export default function RecentlyReturned() {
           setItems(data as any)
         }
       } catch (err: any) {
-        if (!isCancelled) setError(err?.message || 'Failed to load recently returned items')
+        if (!isCancelled) setError(err?.message || t('recentlyReturned.error'))
       } finally {
         if (!isCancelled) setLoading(false)
       }
@@ -35,7 +37,7 @@ export default function RecentlyReturned() {
 
   if (loading) {
     return (
-      <div className="text-center text-sm text-muted-foreground">Loading recently returned…</div>
+      <div className="text-center text-sm text-muted-foreground">{t('recentlyReturned.loading')}</div>
     )
   }
 
@@ -47,7 +49,7 @@ export default function RecentlyReturned() {
 
   if (!items || items.length === 0) {
     return (
-      <div className="text-center text-sm text-muted-foreground">No items returned yet.</div>
+      <div className="text-center text-sm text-muted-foreground">{t('recentlyReturned.empty')}</div>
     )
   }
 

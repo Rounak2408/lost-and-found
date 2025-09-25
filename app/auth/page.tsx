@@ -7,6 +7,7 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { ThemeSwitcher } from '@/components/theme-switcher'
+import { MobileControls } from '@/components/mobile-controls'
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import { AlertDialog, AlertDialogAction, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog'
 import { createUser, authenticateUser, getUserByPhone, generateVerificationCode, storeVerificationCode, verifyCode, updateUserPassword } from '@/lib/database/users'
@@ -264,24 +265,26 @@ export default function AuthPage() {
         <>
           {/* Header */}
           <header className="border-b bg-card/50 backdrop-blur-sm sticky top-0 z-50">
-        <div className="container mx-auto px-4 py-4">
+        <div className="container mx-auto px-2 sm:px-4 py-2 sm:py-4">
           <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-2">
-              <span className="text-accent text-2xl">🔍</span>
+            <div className="flex items-center space-x-1 sm:space-x-2">
+              <span className="text-accent text-xl sm:text-2xl">🔍</span>
               <div>
-                <h1 className="text-xl font-bold text-foreground">SmartFind</h1>
-                <p className="text-sm text-muted-foreground">Lost & Found Management</p>
+                <h1 className="text-lg sm:text-xl font-bold text-foreground">SmartFind</h1>
+                <p className="text-xs sm:text-sm text-muted-foreground">Lost & Found Management</p>
               </div>
             </div>
-            <div className="flex items-center space-x-4">
-              <Button 
-                variant="ghost" 
+            <div className="flex items-center space-x-2 sm:space-x-4">
+              <Button
+                variant="outline"
                 onClick={() => window.location.href = '/'}
-                className="text-muted-foreground hover:text-foreground"
+                className="text-muted-foreground hover:text-foreground border-gray-300 dark:border-gray-600 hover:border-gray-400 dark:hover:border-gray-500 text-xs sm:text-sm px-2 sm:px-3 py-1 sm:py-2"
               >
                 Go to Home
               </Button>
-              <ThemeSwitcher />
+              <div className="hidden sm:block">
+                <ThemeSwitcher />
+              </div>
             </div>
           </div>
         </div>
@@ -727,6 +730,9 @@ export default function AuthPage() {
       </AlertDialog>
         </>
       )}
+
+      {/* Mobile Controls */}
+      <MobileControls />
     </div>
   )
 }

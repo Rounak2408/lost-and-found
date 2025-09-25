@@ -20,9 +20,9 @@ export function LanguageSelect({ compact = false }: { compact?: boolean }) {
 
   return (
     <Select value={language} onValueChange={(val) => setLanguage(val as LanguageCode)}>
-      <SelectTrigger className={compact ? 'h-8 w-[96px] text-xs' : 'w-[160px]'} aria-label="Select language">
+      <SelectTrigger className={compact ? 'h-8 w-[120px] text-xs' : 'w-[160px]'} aria-label="Select language">
         <SelectValue placeholder="Lang">
-          {shortLabels[language]}
+          {labels[language]}
         </SelectValue>
       </SelectTrigger>
       <SelectContent align="end">
