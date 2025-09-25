@@ -43,7 +43,7 @@ export default function HomePage() {
       {/* Header */}
       <header className="border-b bg-white/95 dark:bg-gray-900/95 backdrop-blur-md sticky top-0 z-50 shadow-sm">
         <div className="container mx-auto px-3 sm:px-6 py-3 sm:py-4">
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between relative">
             {/* Logo Section */}
             <div className="flex items-center space-x-3">
               <div className="flex items-center space-x-2">
@@ -58,7 +58,7 @@ export default function HomePage() {
             </div>
 
             {/* Navigation - Desktop */}
-            <nav className="hidden lg:flex items-center space-x-6">
+            <nav className="hidden lg:flex items-center space-x-6 absolute left-1/2 -translate-x-1/2">
               <a href="#search" className="text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-400 transition-colors">
                 {t('nav.search')}
               </a>
@@ -79,7 +79,7 @@ export default function HomePage() {
               <div className="shrink-0 ml-2 sm:ml-3">
                 <ThemeSwitcher />
               </div>
-              <div className="sm:hidden min-w-[96px] shrink-0 mx-1">
+              <div className="min-w-[120px] shrink-0 mx-1">
                 <LanguageSelect compact />
               </div>
 
@@ -159,7 +159,7 @@ export default function HomePage() {
           <div className="text-center mb-8 sm:mb-12">
             <h2 className="text-2xl sm:text-3xl font-bold mb-3 sm:mb-4">{t('how.title')}</h2>
             <p className="text-muted-foreground text-sm sm:text-lg max-w-2xl mx-auto">
-              Our intelligent system makes finding lost items simple and efficient through smart matching technology.
+              {t('how.subtitle')}
             </p>
           </div>
 
