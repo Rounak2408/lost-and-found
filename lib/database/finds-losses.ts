@@ -124,6 +124,55 @@ export const getAllFinds = async () => {
   }
 }
 
+// Mark a find as returned to the owner
+export const markFindAsReturned = async (findId: number) => {
+  if (!SUPABASE_CONFIGURED) {
+    throw new Error('Supabase is not configured. Cannot update find status.')
+  }
+
+  try {
+    const { data, error } = await supabase
+      .from('finds')
+      .update({ status: 'returned' })
+      .eq('id', findId)
+      .select()
+      .single()
+
+    if (error) {
+      throw error
+    }
+
+    return { data, error: null }
+  } catch (error) {
+    throw error
+  }
+}
+
+// Fetch recently returned items (public)
+export const getRecentlyReturnedFinds = async (limit: number = 6) => {
+  if (!SUPABASE_CONFIGURED) {
+    // In non-configured environments, just return an empty list gracefully
+    return { data: [], error: null }
+  }
+
+  try {
+    const { data, error } = await supabase
+      .from('finds')
+      .select('*')
+      .eq('status', 'returned')
+      .order('updated_at', { ascending: false })
+      .limit(limit)
+
+    if (error) {
+      throw error
+    }
+
+    return { data, error: null }
+  } catch (error) {
+    throw error
+  }
+}
+
 // Loss operations
 export const createLoss = async (lossData: CreateLossData) => {
   if (!SUPABASE_CONFIGURED) {

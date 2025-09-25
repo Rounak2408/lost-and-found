@@ -105,14 +105,59 @@ export default function ChatbotWidget() {
     }
   }, [open, messages])
 
-  const handleSend = () => {
+  const handleSend = async () => {
     const value = input.trim()
     if (!value) return
     const userMsg: ChatMessage = { role: 'user', content: value }
-    const sug = getSuggestion(value)
-    const reply: ChatMessage = { role: 'assistant', content: sug.text, actions: sug.actions }
-    setMessages(prev => [...prev, userMsg, reply])
+    setMessages(prev => [...prev, userMsg, { role: 'assistant', content: '' }])
     setInput('')
+
+    try {
+      const res = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ messages: [...messages, userMsg] }),
+      })
+
+      if (!res.body) {
+        // fallback to local suggestion
+        const sug = getSuggestion(value)
+        setMessages(prev => {
+          const next = [...prev]
+          next[next.length - 1] = { role: 'assistant', content: sug.text, actions: sug.actions }
+          return next
+        })
+        return
+      }
+
+      const reader = res.body.getReader()
+      const decoder = new TextDecoder()
+      let assistantText = ''
+
+      while (true) {
+        const { value: chunk, done } = await reader.read()
+        if (done) break
+        assistantText += decoder.decode(chunk, { stream: true })
+        setMessages(prev => {
+          const next = [...prev]
+          next[next.length - 1] = { role: 'assistant', content: assistantText }
+          return next
+        })
+      }
+
+      setMessages(prev => {
+        const next = [...prev]
+        next[next.length - 1] = { role: 'assistant', content: assistantText }
+        return next
+      })
+    } catch {
+      const sug = getSuggestion(value)
+      setMessages(prev => {
+        const next = [...prev]
+        next[next.length - 1] = { role: 'assistant', content: sug.text, actions: sug.actions }
+        return next
+      })
+    }
   }
 
   const handleAction = (action: ChatAction) => {

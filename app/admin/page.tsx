@@ -3,6 +3,11 @@
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart'
 import { Bar, BarChart, CartesianGrid, XAxis } from 'recharts'
+import { Input } from '@/components/ui/input'
+import { Button } from '@/components/ui/button'
+import { useState } from 'react'
+import { markFindAsReturned } from '@/lib/database/finds-losses'
+import { sendCommunityNotification } from '@/lib/database/shared-notifications'
 
 const data = [
   { name: 'Mon', matches: 12, reports: 40 },
@@ -15,9 +20,61 @@ const data = [
 ]
 
 export default function AdminAnalyticsPage() {
+  const [markingId, setMarkingId] = useState('')
+  const [isMarking, setIsMarking] = useState(false)
+  const [markMessage, setMarkMessage] = useState<string | null>(null)
   return (
     <div className="container mx-auto px-4 py-8 space-y-6">
       <h1 className="text-2xl font-bold">Admin Analytics</h1>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>Mark Item as Returned</CardTitle>
+        </CardHeader>
+        <CardContent className="flex flex-col sm:flex-row gap-3 items-start sm:items-end">
+          <div className="flex-1">
+            <label className="text-sm block mb-1">Find ID</label>
+            <Input
+              placeholder="Enter find ID"
+              value={markingId}
+              onChange={(e) => setMarkingId(e.target.value)}
+            />
+          </div>
+          <Button
+            onClick={async () => {
+              if (!markingId) return
+              setIsMarking(true)
+              setMarkMessage(null)
+              try {
+                const idNum = Number(markingId)
+                if (Number.isNaN(idNum)) throw new Error('Invalid ID')
+                const { data } = await markFindAsReturned(idNum)
+                // Fire community notification for returned item
+                await sendCommunityNotification({
+                  type: 'find',
+                  title: `✅ Item Returned: ${data?.item_name ?? 'Item'}`,
+                  message: `"${data?.item_name ?? 'Item'}" has been returned to its owner. Great job, community!`,
+                  item_name: data?.item_name ?? 'Item',
+                  location: data?.location_found ?? 'Unknown',
+                  date_occurred: new Date().toISOString().split('T')[0],
+                })
+                setMarkMessage('Marked as returned and notified community.')
+                setMarkingId('')
+              } catch (err: any) {
+                setMarkMessage(err?.message || 'Failed to mark as returned')
+              } finally {
+                setIsMarking(false)
+              }
+            }}
+            disabled={isMarking}
+          >
+            {isMarking ? 'Marking…' : 'Mark Returned'}
+          </Button>
+          {markMessage && (
+            <div className="text-sm text-muted-foreground">{markMessage}</div>
+          )}
+        </CardContent>
+      </Card>
 
       <div className="grid md:grid-cols-3 gap-6">
         <Card>

@@ -11,11 +11,14 @@ import { Search, AlertCircle, Loader2, Eye, User, MapPin, Calendar, Settings, Aw
 import { Avatar } from '@/components/avatar'
 import { NotificationBell } from '@/components/notification-bell'
 import MatchNotifications from '@/components/match-notifications'
+import FeedbackBox from '@/components/feedback-box'
+import QuizBox from '@/components/quiz-box'
 import { getVerificationBadge, canSendMessages } from '@/lib/database/verification'
 import ChatbotWidget from '@/components/chatbot-widget'
 import SupportWidget from '@/components/support-widget'
 import ConfettiBurst from '@/components/confetti-burst'
 import DashboardActionAnimation from '@/components/dashboard-action-animation'
+import HelpCommunityStatus from '@/components/help-community-status'
 
 interface UserProfile {
   id: number
@@ -63,6 +66,12 @@ export default function Dashboard() {
     if (typeof window === 'undefined') return // Prevent SSR issues
     
     setIsClient(true)
+    // Listen for perfect quiz celebration (10s confetti)
+    const handler = () => {
+      setShowConfetti(true)
+      setTimeout(() => setShowConfetti(false), 10000)
+    }
+    window.addEventListener('quiz-perfect', handler as any)
     
     // Check if user is logged in via localStorage
     const checkUser = () => {
@@ -98,7 +107,10 @@ export default function Dashboard() {
     // Add a small delay to prevent rapid redirects
     const timer = setTimeout(checkUser, 100)
     
-    return () => clearTimeout(timer)
+    return () => {
+      clearTimeout(timer)
+      window.removeEventListener('quiz-perfect', handler as any)
+    }
   }, [router])
 
   const handleSignOut = async () => {
@@ -407,6 +419,11 @@ export default function Dashboard() {
           </Card>
         </div>
 
+        {/* Help & Community Status Form */}
+        <div className="mt-10">
+          <HelpCommunityStatus />
+        </div>
+
         {/* Recent Activity Section */}
         <div className="mt-12 sm:mt-16 lg:mt-20 max-w-6xl mx-auto">
           <div className="text-center mb-8 sm:mb-12">
@@ -461,7 +478,7 @@ export default function Dashboard() {
           </div>
         </div>
 
-        {/* Match Notifications Section */}
+        {/* Smart Matches (full width), then Feedback + Quiz below */}
         <div className="mt-12 sm:mt-16 lg:mt-20 max-w-6xl mx-auto">
           <div className="text-center mb-8 sm:mb-12">
             <h3 className="text-2xl sm:text-3xl font-bold mb-3 sm:mb-4">🎯 {t('dash.smartMatches')}</h3>
@@ -469,6 +486,10 @@ export default function Dashboard() {
           </div>
           <div className="max-w-4xl mx-auto px-2 sm:px-0">
             <MatchNotifications userId={user.id} />
+          </div>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 mt-6">
+            <FeedbackBox />
+            <QuizBox />
           </div>
         </div>
       </main>

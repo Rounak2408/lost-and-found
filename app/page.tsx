@@ -6,6 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
 import { ThemeSwitcher } from "@/components/theme-switcher"
+import RecentlyReturned from "@/components/recently-returned"
 import { LanguageSelect } from "@/components/language-select"
 import { useI18n } from "@/components/i18n-provider"
 import { useRouter } from "next/navigation"
@@ -278,6 +279,17 @@ export default function HomePage() {
               <div className="text-muted-foreground">{t('stats.successRate')}</div>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Recently Returned (Public) */}
+      <section className="py-12 sm:py-16 bg-card/30">
+        <div className="container mx-auto px-4">
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="text-2xl sm:text-3xl font-bold">Recently Returned</h2>
+            <Badge variant="success">Recovered</Badge>
+          </div>
+          <RecentlyReturned />
         </div>
       </section>
 
